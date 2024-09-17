@@ -7,8 +7,8 @@
 .container {
   max-width: 1360px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Автоматически заполняет строки */
-  gap: 25px; /* Отступы между элементами */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
   padding: 0 15px;
 }
 
