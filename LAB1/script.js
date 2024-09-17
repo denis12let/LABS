@@ -1,31 +1,33 @@
-let numberOfFilms = prompt('Сколько фильмов вы уже посмотрели?');
+const numberOfFilms = prompt('Сколько фильмов вы уже посмотрели?');
 
-const personalMovieDB = {
-  count: numberOfFilms,
-  movies: {},
-};
+let personalMovieDB = { count: numberOfFilms, movies: {} };
 
-for (let i = 0; i < 2; i++) {
-  let movieName;
-  let movieRating;
+function setMoviews() {
+  const countOfQuestions = 2;
+  let i = 0;
 
-  while (true) {
-    movieName = prompt('Один из последних просмотренных фильмов?');
-    if (movieName && movieName.length <= 50) {
-      break;
-    }
-    alert('Пожалуйста, введите корректное название фильма (не пустое и не длиннее 50 символов).');
+  while (i < countOfQuestions) {
+    const lastMovieName = prompt('Один из последних просмотренных фильмов?');
+    if (!checkInput(lastMovieName)) continue;
+
+    const lastMovieMark = prompt('На сколько оцените его?');
+    if (!checkInput(lastMovieMark)) continue;
+
+    i++;
+
+    personalMovieDB.movies[lastMovieName] = lastMovieMark;
   }
-
-  while (true) {
-    movieRating = prompt('На сколько оцените его?');
-    if (movieRating) {
-      break;
-    }
-    alert('Пожалуйста, введите оценку.');
-  }
-
-  personalMovieDB.movies[movieName] = movieRating;
 }
+
+function checkInput(name) {
+  if (name === '' || name.length > 50) {
+    alert('Пустая строка или ввод превышает 50 символов');
+    return false;
+  }
+
+  return true;
+}
+
+setMoviews();
 
 console.log(personalMovieDB);
