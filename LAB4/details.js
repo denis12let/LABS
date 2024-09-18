@@ -1,7 +1,7 @@
 const shirtItem = JSON.parse(localStorage.getItem('shirt'));
 
-const currColor = Object.keys(shirtItem.colors)[0];
-const currSide = 'front';
+let currColor = Object.keys(shirtItem.colors)[0];
+let currSide = 'front';
 
 const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
@@ -90,6 +90,8 @@ for (const color in shirtItem.colors) {
 
   colorItem.appendChild(colorButton);
   colorsList.appendChild(colorItem);
+
+  colorButton.onclick = () => colorHandler(color);
 }
 
 itemColors.appendChild(colorsTitle);
@@ -123,20 +125,27 @@ document.body.appendChild(wrapper);
 ////////////////////////////////////////////
 
 backToButton.onclick = () => (window.location.href = 'index.html');
-
 frontButton.onclick = () => frontButtonHandler();
 backButton.onclick = () => backButtonHandler();
 
 function frontButtonHandler() {
+  currSide = 'front';
   frontButton.disabled = true;
   backButton.disabled = false;
   const shirtImg = document.querySelector('.item__img');
-  shirtImg.src = shirtItem.colors[currColor].front;
+  shirtImg.src = shirtItem.colors[currColor][currSide];
 }
 
 function backButtonHandler() {
+  currSide = 'back';
   frontButton.disabled = false;
   backButton.disabled = true;
   const shirtImg = document.querySelector('.item__img');
-  shirtImg.src = shirtItem.colors[currColor].back;
+  shirtImg.src = shirtItem.colors[currColor][currSide];
+}
+
+function colorHandler(color) {
+  currColor = color;
+  const shirtImg = document.querySelector('.item__img');
+  shirtImg.src = shirtItem.colors[currColor][currSide];
 }
