@@ -21,6 +21,12 @@ shirts.forEach((shirt) => {
     const productBtn = createBtn('button-modal', 'Quick View');
     const productBtnSeePager = createBtn('button-pager', 'See Pager');
 
+    const productItemTitle = document.createElement('h3');
+    productItemTitle.textContent = shirt.name;
+
+    const productItemPrice = document.createElement('p');
+    productItemTitle.textContent = shirt.price;
+
     productBtn.onclick = () => showModalProduct(productItem);
 
     const productButtons = document.createElement('div');
@@ -29,8 +35,8 @@ shirts.forEach((shirt) => {
     productButtons.appendChild(productBtnSeePager);
 
     productItem.appendChild(productImage);
-    productItem.innerHTML += `<h3>${shirt.name}</h3>`;
-    productItem.innerHTML += `<p>${shirt.price}</p>`;
+    productItem.appendChild(productItemTitle);
+    productItem.appendChild(productItemPrice);
     productItem.appendChild(productButtons);
 
     productsContainer.appendChild(productItem);
