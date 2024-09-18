@@ -1,0 +1,72 @@
+@import url('/LAB4/normalize.css');
+
+.shirt {
+  padding-top: 20px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.item {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  gap: 30px;
+}
+
+.item__price {
+  font-size: 48px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.item__description {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 90px;
+}
+
+.item__side {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.item__side-title {
+  opacity: 0.7;
+}
+
+.item__colors {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.item__colors-title {
+  opacity: 0.7;
+}
+
+.item__colors-list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+button {
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  background-color: blue;
+  border-radius: 7px;
+}
+
+.item__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
