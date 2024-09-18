@@ -1,6 +1,5 @@
 const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
-
 const productsTitle = document.createElement('h2');
 productsTitle.textContent = 'Out of T-Shirts';
 
@@ -30,12 +29,13 @@ shirts.forEach((shirt) => {
   const productItemPrice = document.createElement('p');
   productItemTitle.textContent = shirt.price;
 
-  productBtn.onclick = () => showModalProduct(productItem);
-
   const productButtons = document.createElement('div');
   productButtons.className = 'product__buttons';
   productButtons.appendChild(productBtn);
   productButtons.appendChild(productBtnSeePager);
+
+  productBtn.onclick = () => showModalProduct(productItem);
+  productBtnSeePager.onclick = () => navigateDetails(shirt);
 
   productItem.appendChild(productImage);
   productItem.appendChild(productItemTitle);
@@ -86,4 +86,9 @@ function createBtn(className, text) {
   button.textContent = text;
 
   return button;
+}
+
+function navigateDetails(shirt) {
+  localStorage.setItem('shirt', JSON.stringify(shirt));
+  window.location.href = 'details.html';
 }

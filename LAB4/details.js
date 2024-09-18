@@ -1,4 +1,8 @@
-// Создание элементов
+const shirtItem = JSON.parse(localStorage.getItem('shirt'));
+
+const currColor = Object.keys(shirtItem.colors)[0];
+const currSide = 'front';
+
 const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
 
@@ -13,14 +17,14 @@ shirtInner.className = 'shirt__inner';
 
 const title = document.createElement('h2');
 title.className = 'title';
-title.textContent = 'Car';
+title.textContent = shirtItem.name;
 
 const item = document.createElement('div');
 item.className = 'item';
 
 const img = document.createElement('img');
-img.src = '/LAB4/shirt_images/beepboop-blue-back.png';
-img.alt = '';
+img.src = shirtItem.colors[currColor].front;
+img.alt = 'shirt';
 img.className = 'item__img';
 
 const itemInfo = document.createElement('div');
@@ -31,11 +35,11 @@ infoWrap.className = 'item__info-wrap';
 
 const price = document.createElement('p');
 price.className = 'item__price';
-price.textContent = '4567';
+price.textContent = shirtItem.price;
 
 const description = document.createElement('p');
 description.className = 'item__description';
-description.textContent = 'sgsdfgfd';
+description.textContent = shirtItem.description;
 
 const itemSide = document.createElement('div');
 itemSide.className = 'item__side';
@@ -47,6 +51,7 @@ sideTitle.textContent = 'Side: ';
 const frontButton = document.createElement('button');
 frontButton.className = 'item__side-btn--front';
 frontButton.textContent = 'Front';
+frontButton.disabled = true;
 
 const backButton = document.createElement('button');
 backButton.className = 'item__side-btn--back';
@@ -68,17 +73,24 @@ colorsList.className = 'item__colors-list';
 
 const colorButtons = ['12323', '12323', '12323', '12323', '12323'];
 
-colorButtons.forEach((color) => {
+for (const color in shirtItem.colors) {
   const colorItem = document.createElement('li');
   colorItem.className = 'item__color';
 
   const colorButton = document.createElement('button');
   colorButton.className = 'item__color-btn';
   colorButton.textContent = color;
+  colorButton.style.background = color;
+
+  if (color === 'white') {
+    colorButton.style.color = '#000';
+  } else {
+    colorButton.style.color = '#fff';
+  }
 
   colorItem.appendChild(colorButton);
   colorsList.appendChild(colorItem);
-});
+}
 
 itemColors.appendChild(colorsTitle);
 itemColors.appendChild(colorsList);
@@ -105,3 +117,26 @@ shirt.appendChild(container);
 wrapper.appendChild(shirt);
 
 document.body.appendChild(wrapper);
+
+////////////////////////////////////////////
+////////////////////////////////////////////
+////////////////////////////////////////////
+
+backToButton.onclick = () => (window.location.href = 'index.html');
+
+frontButton.onclick = () => frontButtonHandler();
+backButton.onclick = () => backButtonHandler();
+
+function frontButtonHandler() {
+  frontButton.disabled = true;
+  backButton.disabled = false;
+  const shirtImg = document.querySelector('.item__img');
+  shirtImg.src = shirtItem.colors[currColor].front;
+}
+
+function backButtonHandler() {
+  frontButton.disabled = false;
+  backButton.disabled = true;
+  const shirtImg = document.querySelector('.item__img');
+  shirtImg.src = shirtItem.colors[currColor].back;
+}

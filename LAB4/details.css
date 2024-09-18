@@ -63,6 +63,15 @@ button {
   color: #fff;
   background-color: blue;
   border-radius: 7px;
+  border: 1px solid rgba(156, 151, 151, 0.3);
+}
+
+button:focus {
+  border: 2px solid black;
+}
+
+button:hover {
+  opacity: 0.7;
 }
 
 .item__info {
