@@ -9,12 +9,21 @@ targets.forEach((item) => {
     left: 0,
   };
 
+  // For resizing
+  let isResizing = false;
+  const minSize = 50; // Minimum size for the element
+
   item.addEventListener('mousedown', (mouse) => clickDownHandler(mouse));
   document.addEventListener('mouseup', () => clickUpHandler());
   document.addEventListener('mousemove', (mouse) => moveSelectedItem(mouse));
   item.addEventListener('dblclick', () => dbClickHandler());
   document.addEventListener('click', () => dbClickCancelHandler());
   document.addEventListener('keydown', (e) => pressESCHandler(e));
+
+  // Touch event listeners
+  item.addEventListener('touchstart', (touch) => touchStartHandler(touch));
+  document.addEventListener('touchend', () => touchEndHandler());
+  document.addEventListener('touchmove', (touch) => moveSelectedItem(touch));
 
   function clickDownHandler(mouse) {
     if (!isAssigned) {
@@ -25,21 +34,36 @@ targets.forEach((item) => {
     }
   }
 
+  function touchStartHandler(touch) {
+    if (!isAssigned) {
+      isSelected = true;
+
+      const touchPoint = touch.touches[0];
+      offsetX = touchPoint.clientX - item.getBoundingClientRect().left;
+      offsetY = touchPoint.clientY - item.getBoundingClientRect().top;
+    } else {
+      isAssigned = true;
+      prevPos.top = item.style.top;
+      prevPos.left = item.style.left;
+      item.style.backgroundColor = 'black';
+    }
+  }
+
   function clickUpHandler() {
     isSelected = false;
   }
 
-  function moveSelectedItem(mouse) {
-    if (isSelected) {
-      item.style.top = `${mouse.clientY - offsetY}px`;
-      item.style.left = `${mouse.clientX - offsetX}px`;
-    }
+  function touchEndHandler() {
+    isSelected = false;
   }
 
-  function moveAssignedItem(mouse) {
-    if (isAssigned) {
-      item.style.top = `${mouse.clientY - offsetY}px`;
-      item.style.left = `${mouse.clientX - offsetX}px`;
+  function moveSelectedItem(mouse) {
+    if (isSelected || isAssigned) {
+      const posX = mouse.clientX || mouse.touches[0].clientX;
+      const posY = mouse.clientY || mouse.touches[0].clientY;
+
+      item.style.top = `${posY - offsetY}px`;
+      item.style.left = `${posX - offsetX}px`;
     }
   }
 
@@ -63,14 +87,40 @@ targets.forEach((item) => {
 
   function pressESCHandler(e) {
     if ((isAssigned || isSelected) && e.key === 'Escape') {
-      isSelected = false;
-      isAssigned = false;
-
-      item.style.top = prevPos.top;
-      item.style.left = prevPos.left;
-
-      item.style.backgroundColor = 'red';
-      document.removeEventListener('mousemove', moveAssignedItem);
+      resetPosition();
     }
   }
+
+  function resetPosition() {
+    isSelected = false;
+    isAssigned = false;
+
+    item.style.top = prevPos.top;
+    item.style.left = prevPos.left;
+    item.style.backgroundColor = 'red';
+    document.removeEventListener('mousemove', moveAssignedItem);
+  }
+
+  // Resize functionality
+  const resizeHandle = document.createElement('div');
+  resizeHandle.classList.add('resize-handle');
+  item.appendChild(resizeHandle);
+
+  resizeHandle.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+    isResizing = true;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isResizing = false;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isResizing) {
+      const newWidth = Math.max(minSize, e.clientX - item.getBoundingClientRect().left);
+      const newHeight = Math.max(minSize, e.clientY - item.getBoundingClientRect().top);
+      item.style.width = `${newWidth}px`;
+      item.style.height = `${newHeight}px`;
+    }
+  });
 });
