@@ -9,18 +9,12 @@ targets.forEach((item) => {
     left: 0,
   };
 
-  // For resizing
-  let isResizing = false;
-  const minSize = 50; // Minimum size for the element
-
   item.addEventListener('mousedown', (mouse) => clickDownHandler(mouse));
   document.addEventListener('mouseup', () => clickUpHandler());
   document.addEventListener('mousemove', (mouse) => moveSelectedItem(mouse));
   item.addEventListener('dblclick', () => dbClickHandler());
   document.addEventListener('click', () => dbClickCancelHandler());
   document.addEventListener('keydown', (e) => pressESCHandler(e));
-
-  // Touch event listeners
   item.addEventListener('touchstart', (touch) => touchStartHandler(touch));
   document.addEventListener('touchend', () => touchEndHandler());
   document.addEventListener('touchmove', (touch) => moveSelectedItem(touch));
@@ -100,27 +94,4 @@ targets.forEach((item) => {
     item.style.backgroundColor = 'red';
     document.removeEventListener('mousemove', moveAssignedItem);
   }
-
-  // Resize functionality
-  const resizeHandle = document.createElement('div');
-  resizeHandle.classList.add('resize-handle');
-  item.appendChild(resizeHandle);
-
-  resizeHandle.addEventListener('mousedown', (e) => {
-    e.stopPropagation();
-    isResizing = true;
-  });
-
-  document.addEventListener('mouseup', () => {
-    isResizing = false;
-  });
-
-  document.addEventListener('mousemove', (e) => {
-    if (isResizing) {
-      const newWidth = Math.max(minSize, e.clientX - item.getBoundingClientRect().left);
-      const newHeight = Math.max(minSize, e.clientY - item.getBoundingClientRect().top);
-      item.style.width = `${newWidth}px`;
-      item.style.height = `${newHeight}px`;
-    }
-  });
 });
