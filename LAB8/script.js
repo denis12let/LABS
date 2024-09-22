@@ -42,6 +42,7 @@ function moveHandler(event) {
     const y = Math.min(startY, endY);
     const width = Math.abs(endX - startX);
     const height = Math.abs(endY - startY);
+
     ctx.strokeRect(x, y, width, height);
   }
 }
