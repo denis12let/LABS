@@ -30,12 +30,14 @@ function moveHandler(event) {
   const endY = event.offsetY;
   const shape = shapeSelector.value;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (shape === 'circle') {
     const radius = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
     ctx.beginPath();
     ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'black';
+    ctx.fill();
     ctx.stroke();
   } else if (shape === 'rectangle') {
     const x = Math.min(startX, endX);
@@ -43,6 +45,8 @@ function moveHandler(event) {
     const width = Math.abs(endX - startX);
     const height = Math.abs(endY - startY);
 
+    ctx.fillStyle = 'black';
+    ctx.fillRect(x, y, width, height);
     ctx.strokeRect(x, y, width, height);
   }
 }
