@@ -1,7 +1,5 @@
 const targets = document.querySelectorAll('.target');
 
-console.log(14124);
-
 targets.forEach((item) => {
   let isSelected = false;
   let offsetX, offsetY;

@@ -71,7 +71,7 @@ colorsTitle.textContent = 'Color: ';
 const colorsList = document.createElement('ul');
 colorsList.className = 'item__colors-list';
 
-const colorButtons = ['12323', '12323', '12323', '12323', '12323'];
+// const colorButtons = ['12323', '12323', '12323', '12323', '12323'];
 
 for (const color in shirtItem.colors) {
   const colorItem = document.createElement('li');
