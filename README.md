@@ -1,1 +1,1 @@
-<a href="index.html">Работы</a>
+<a href="https://denis12let.github.io/LABS/">Работы</a>
